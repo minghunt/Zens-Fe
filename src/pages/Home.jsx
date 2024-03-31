@@ -9,14 +9,14 @@ function Home() {
     const axiosInstance = axios.create({
         withCredentials: true,
         headers: {
-            "Access-Control-Allow-Origin": "https://zens-be-git-main-minghunts-projects.vercel.app/",
+            "Access-Control-Allow-Origin": process.env.REACT_APP_BASE_URL,
             "Content-Type": "application/json", // Đảm bảo đặt kiểu dữ liệu mong muốn
         },
     });
     useEffect(() => {
         setIsLoading(true);
         axiosInstance
-            .get(`${process.env.REACT_APP_BASE_URL}/joke/get`)
+            .get(`${process.env.REACT_APP_BASE_URL}/api/joke/get`)
             .then((res) => {
                 if (res.data.joke.message === "Come back another day!") {
                     setJoke(false);
@@ -24,17 +24,19 @@ function Home() {
                     setIsLoading(false);
                     setJoke(res.data.joke);
                 }
-            });
+            })
+            .catch(() => console.log("Error Network"));
     }, [update]);
     function handleVoteJoke(isFunny) {
         axiosInstance
             .post(
-                `${process.env.REACT_APP_BASE_URL}/joke/vote?id=${joke._id}&isfunny=${isFunny}`
+                `${process.env.REACT_APP_BASE_URL}/api/joke/vote?id=${joke._id}&isfunny=${isFunny}`
             )
             .then((res) => {
                 setJoke(res.data.joke);
                 setUpdate((prev) => !prev);
-            });
+            })
+            .catch(() => console.log("Error Network"));
     }
     return (
         <div>
