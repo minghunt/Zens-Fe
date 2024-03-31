@@ -9,7 +9,7 @@ function Home() {
     const axiosInstance = axios.create({
         withCredentials: true,
         headers: {
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "https://zens-be-git-main-minghunts-projects.vercel.app/",
             "Content-Type": "application/json", // Đảm bảo đặt kiểu dữ liệu mong muốn
         },
     });
