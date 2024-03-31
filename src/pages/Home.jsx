@@ -8,6 +8,10 @@ function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const axiosInstance = axios.create({
         withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": "https://backend-h9kp02lv3-minghunts-projects.vercel.app",
+            "Content-Type": "application/json", // Đảm bảo đặt kiểu dữ liệu mong muốn
+        },
     });
     useEffect(() => {
         setIsLoading(true);
