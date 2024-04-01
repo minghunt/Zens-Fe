@@ -4,6 +4,7 @@ import Loading from "../components/Loading";
 
 function Home() {
     const [joke, setJoke] = useState({});
+    const [update, setUpdate] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const axiosInstance = axios.create({
         withCredentials: true,
@@ -20,11 +21,11 @@ function Home() {
                     setJoke(false);
                 } else {
                     setJoke(res.data.joke);
+                    setIsLoading(false);
                 }
-                setIsLoading(false);
             })
             .catch(() => console.log("Error Network"));
-    }, [isLoading]);
+    }, [update]);
     function handleVoteJoke(isFunny) {
         setIsLoading(true);
         axiosInstance
@@ -33,6 +34,7 @@ function Home() {
             )
             .then((res) => {
                 setJoke(res.data.joke);
+                setUpdate((prev) => !prev);
             })
             .catch(() => console.log("Error Network"));
     }
