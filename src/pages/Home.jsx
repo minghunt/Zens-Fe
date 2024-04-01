@@ -4,7 +4,6 @@ import Loading from "../components/Loading";
 
 function Home() {
     const [joke, setJoke] = useState({});
-    const [update, setUpdate] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const axiosInstance = axios.create({
         withCredentials: true,
@@ -14,27 +13,26 @@ function Home() {
         },
     });
     useEffect(() => {
-        setIsLoading(true);
         axiosInstance
             .get(`${process.env.REACT_APP_BASE_URL}/api/joke`)
             .then((res) => {
                 if (res.data.joke.message === "Come back another day!") {
                     setJoke(false);
                 } else {
-                    setIsLoading(false);
                     setJoke(res.data.joke);
                 }
+                setIsLoading(false);
             })
             .catch(() => console.log("Error Network"));
-    }, [update]);
+    }, [isLoading]);
     function handleVoteJoke(isFunny) {
+        setIsLoading(true);
         axiosInstance
             .post(
                 `${process.env.REACT_APP_BASE_URL}/api/joke/vote?id=${joke._id}&isfunny=${isFunny}`
             )
             .then((res) => {
                 setJoke(res.data.joke);
-                setUpdate((prev) => !prev);
             })
             .catch(() => console.log("Error Network"));
     }
