@@ -16,7 +16,7 @@ function Home() {
     useEffect(() => {
         setIsLoading(true);
         axiosInstance
-            .get(`${process.env.REACT_APP_BASE_URL}/api/joke/get`)
+            .get(`${process.env.REACT_APP_BASE_URL}/api/joke`)
             .then((res) => {
                 if (res.data.joke.message === "Come back another day!") {
                     setJoke(false);
